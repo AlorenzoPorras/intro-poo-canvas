@@ -1,6 +1,8 @@
 const canvasOOP = document.getElementById("canvasOOP");
 const ctx = canvasOOP.getContext("2d");
 
+
+
 // Se ulitiza a nivel global en la page para sacar el ancho y alto de la pantalla
 /* const window_height = window.innerHeight;
 const window_width = window.innerWidth; */
@@ -51,11 +53,22 @@ class Circle {
 }
 
 
-/*let randomX =  Math.random()* window_width;
-let randomY =  Math.random()* window_height;
-let randomRadius = Math.floor(Math.random()*100 + 30);*/
+// let randomX =  Math.random()* window_width;
+// let randomY =  Math.random()* window_height;
+// let randomRadius = Math.floor(Math.random()*100 + 30);
 
-let miCirculo = new Circle(canvasOOP.height / 2, canvasOOP.width / 2, 50, 'red', 'Tec');
+// let miCirculo = new Circle(canvasOOP.height / 2, canvasOOP.width / 2, 50, 'red', 'Tec');
+
+// miCirculo.draw(ctx);
+
+const fixedRadius = 50; // Radio fijo para el círculo
+
+let randomX = Math.random() * (canvasOOP.width - 2 * fixedRadius) + fixedRadius;
+let randomY = Math.random() * (canvasOOP.height - 2 * fixedRadius) + fixedRadius;
+let randomRadius = Math.floor(Math.random() * 100 + 30);
+
+let miCirculo = new Circle(randomX, randomY, fixedRadius, 'red', 'Tec');
 
 miCirculo.draw(ctx);
+
 
