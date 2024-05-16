@@ -57,7 +57,7 @@ class Circle {
 //Primer canvas
 
 // Crear el círculo con un color de fondo específico y dibujarlo en el canvas
-let miCirculo = new Circle(150, 100, 50, 'blue', 'Tec', 'yellow');
+let miCirculo = new Circle(150, 100, 50, 'rgb(229, 9, 199)', 'Tec', 'rgb(229, 9, 199)');
 miCirculo.draw(ctx);
 
 //Segundo canvas
@@ -66,7 +66,7 @@ let randomX = Math.random() * canvasRandom.width;
 let randomY = Math.random() * canvasRandom.height;
 let randomRadius = Math.floor(Math.random() * 100 + 30);
 
-let miCirculoMovimiento = new Circle(randomX, randomY, randomRadius, 'black', 'Tec','blue');
+let miCirculoMovimiento = new Circle(randomX, randomY, randomRadius, 'rgb(247, 243, 212)', 'Tec','rgb(247, 243, 212)');
 miCirculoMovimiento.draw(ctxRandom);
 
 //Tercer canvas
@@ -88,7 +88,7 @@ for (let i = 0; i < 10; i++) {
         randomY = Math.random() * (canvasMultiobjt.height - 2 * randomRadius) + randomRadius;
     } while (!validPlacement(randomX, randomY, randomRadius, canvasMultiobjt));
 
-    let newCircle = new Circle(randomX, randomY, randomRadius, "blue", i + 1, 'rgb(88, 242, 32)');
+    let newCircle = new Circle(randomX, randomY, randomRadius, "black", i + 1, 'rgb(212, 247, 243)');
     arrayCircle.push(newCircle);
     newCircle.draw(ctxMultiobjt);
 }
