@@ -1,74 +1,94 @@
 const canvasOOP = document.getElementById("canvasOOP");
-const ctx = canvasOOP.getContext("2d");
+const canvasRandom = document.getElementById("canvasRandom");
 
+const ctxRandom = canvasRandom.getContext("2d");
+const ctx = canvasOPP.getContext("2d");
 
+const canvasMultiobjt = document.getElementById("canvasMultiobjt");
+const ctxMultiobjt = canvasMultiobjt.getContext("2d");
 
-// Se ulitiza a nivel global en la page para sacar el ancho y alto de la pantalla
-/* const window_height = window.innerHeight;
-const window_width = window.innerWidth; */
+canvasOPP.height = "200"
+canvasOPP.width = "300" 
+canvasOPP.style.background = "#33FFE3";
 
-// maneja la altura
-canvasOOP.height = 200; //window_height;
-canvasOOP.width = 300; //window_width;
-canvasOOP.style.background = "#ff8";
+canvasRandom.height = 200; 
+canvasRandom.width = 300; 
+canvasRandom.style.background = "#F333FF";
+
+canvasMultiobjt.width = 300;
+canvasMultiobjt.height = 200;
+canvasMultiobjt.style.background = "#FF3380";
 
 class Circle {
-    // constructor que carga los valores posx y posy al objeto
-    constructor(x, y, radius, color, text) {
+    // Carga los valores determinados del objeto
+    constructor(x, y, radius, color, text, backcolor) {
         this.posX = x;
         this.posY = y;
         this.radius = radius;
         this.color = color;
         this.text = text;
+        this.backcolor = backcolor;
     }
 
-    //metodo para renderizar el objeto
     draw(context) {
-
-        //empieza el dibujo
         context.beginPath();
-        //estilo de la linea
+
+        // Rellena el círculo con el color de fondo
+        context.fillStyle = this.backcolor;
+        context.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2, false);
+        context.fill();
+
         context.strokeStyle = this.color;
-        //alinear de forma horizontal
-        context.textAlign = "center";
-        //alinear de forma vertical
-        context.textBaseline = "middle";
-        context.font = "20px Arial";
-        //texto que voy a dibujar en una cordenada. Renderiza un texto en el centro del objeto
-        context.fillText(this.text, this.posX, this.posY);
-        //ancho de linea a 2
-        context.lineWidth = 2;
-        //dibujar un arco -
-
-        /*En false
-        context.arc(this.posX, this.posY, this.radius, 0, Math.PI / 2, false); //0 a 90 
-        context.arc(this.posX, this.posY, this.radius, Math.PI / 2, Math.PI, false); //90 a 180 
-        context.arc(this.posX, this.posY, this.radius, Math.PI, Math.PI * 3 / 2, false); //180 a 270 
-        context.arc(this.posX, this.posY, this.radius, Math.PI * 3 / 2, Math.PI * 2, false); //270 qa 360 */
-
-        context.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2, false);// false encontra de las manesillas del reloj
+        context.lineWidth = 4; // Para poner más grosor a la línea  
+        context.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2, false);
         context.stroke();
+        
+        context.textAlign = "center"; // Alineación horizontal 
+        context.textBaseline = "middle"; // Alineación vertical
+        context.font = "bold 20px Arial";
+        context.fillStyle = "black"; // Cambia el color del texto si lo deseas
+
+        // Renderiza un texto en el centro del objeto
+        context.fillText(this.text, this.posX, this.posY);
         context.closePath();
     }
 }
 
+//Primer canvas
 
-// let randomX =  Math.random()* window_width;
-// let randomY =  Math.random()* window_height;
-// let randomRadius = Math.floor(Math.random()*100 + 30);
-
-// let miCirculo = new Circle(canvasOOP.height / 2, canvasOOP.width / 2, 50, 'red', 'Tec');
-
-// miCirculo.draw(ctx);
-
-const fixedRadius = 50; // Radio fijo para el círculo
-
-let randomX = Math.random() * (canvasOOP.width - 2 * fixedRadius) + fixedRadius;
-let randomY = Math.random() * (canvasOOP.height - 2 * fixedRadius) + fixedRadius;
-let randomRadius = Math.floor(Math.random() * 100 + 30);
-
-let miCirculo = new Circle(randomX, randomY, fixedRadius, 'red', 'Tec');
-
+// Crear el círculo con un color de fondo específico y dibujarlo en el canvas
+let miCirculo = new Circle(150, 100, 50, 'blue', 'Tec', 'yellow');
 miCirculo.draw(ctx);
 
+//Segundo canvas
 
+let randomX = Math.random() * canvasRandom.width;
+let randomY = Math.random() * canvasRandom.height;
+let randomRadius = Math.floor(Math.random() * 100 + 30);
+
+let miCirculoMovimiento = new Circle(randomX, randomY, randomRadius, 'black', 'Tec','blue');
+miCirculoMovimiento.draw(ctxRandom);
+
+//Tercer canvas
+
+function validPlacement(x, y, radius, canvas) {
+    return (x - radius > 0 && x + radius < canvas.width && 
+            y - radius > 0 && y + radius < canvas.height);
+}
+
+let arrayCircle = [];
+
+// Generar y dibujar círculos
+for (let i = 0; i < 10; i++) {
+    let randomRadius, randomX, randomY;
+
+    do {
+        randomRadius = Math.floor(Math.random() * 10 + 20);
+        randomX = Math.random() * (canvasMultiobjt.width - 2 * randomRadius) + randomRadius;
+        randomY = Math.random() * (canvasMultiobjt.height - 2 * randomRadius) + randomRadius;
+    } while (!validPlacement(randomX, randomY, randomRadius, canvasMultiobjt));
+
+    let newCircle = new Circle(randomX, randomY, randomRadius, "blue", i + 1, 'rgb(88, 242, 32)');
+    arrayCircle.push(newCircle);
+    newCircle.draw(ctxMultiobjt);
+}
